@@ -25,6 +25,8 @@ def multiply_sums(nums):
     return "Nothing sums to 2020!"
 
 print(multiply_sums(expense_nums))
+# run time: O(n) bc fast lookup w/ dictionary
+# run space: O(n) -> dictionary length at worst is same length as list
 
 """
 Part 2
