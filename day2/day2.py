@@ -35,9 +35,22 @@ def valid_password(passwords):
     # split password and get min and max numbers
     min_max(passwords)
     # get target letter
+    target_letter(passwords)
+    print(passwords)
     # look at password w/ counter for target letter
-    # see if counter matches min and max
-    return
+    valid = 0
+    for password in passwords:
+        counter = 0
+        condition, letter, check_password = password
+        min, max = condition
+        for char in check_password:
+            if char == letter:
+                counter += 1
+        if counter >= min and counter <= max:
+            valid += 1
+        else:
+            print('invalid', password)
+    return valid
 
 def separate_parts(passwords):
     for idx, password in enumerate(passwords):
@@ -48,6 +61,17 @@ def min_max(passwords):
     for password in passwords:
         conditions = password[0]
         conditions_split = conditions.split('-')
-        print(conditions_split)
+        min, max = conditions_split
+        min = int(min)
+        max = int(max)
+        password[0] = [min, max]
+    return passwords
 
-print(valid_password(example)) #1! the second password is invalid
+def target_letter(passwords):
+    for password in passwords:
+        letter = password[1][:1]
+        password[1] = letter
+    return passwords
+
+# print(valid_password(example)) #2! the second password is invalid
+print(valid_password(passwords_input))
