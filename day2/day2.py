@@ -70,4 +70,39 @@ def target_letter(passwords):
     return passwords
 
 # print(valid_password(example)) #2! the second password is invalid
-print(valid_password(passwords_input))
+# print(valid_password(passwords_input))
+
+
+"""
+Part 2
+condition actually describes position(idx + 1) that letter shows
+ONLY 1 letter can show up
+
+input: list of strings
+output: int - number of valid passwords
+
+thoughts: maybe need to consider if position is out of bounds?
+"""
+def new_valid_password(passwords):
+    separate_parts(passwords)
+    min_max(passwords)
+    target_letter(passwords)
+    valid = 0
+    for password in passwords:
+        counter = 0
+        policy, letter, check_password = password
+        pos1, pos2 = policy #idx = pos - 1
+        idx1 = pos1 - 1
+        idx2 = pos2 - 1
+        if idx1 in range(0, len(check_password)) and check_password[idx1] == letter:
+            counter += 1
+        if idx2 in range(0, len(check_password)) and check_password[idx2] == letter:
+            counter += 1
+        if counter == 1:
+            valid += 1
+        else:
+            print('invalid password', password)
+    return valid
+
+print(new_valid_password(example)) #1 valid password: 2 and 3 are invalid
+print(new_valid_password(passwords_input))
