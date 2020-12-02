@@ -1,7 +1,7 @@
 """Day 1: Report Repair"""
 # opening file and converting text to ints!
 expense = open("day1_input.txt", "r", encoding="utf-8")
-expense_str = expense.read().split('\n') #an empty string at end of list
+expense_str = expense.read().split("\n") #an empty string at end of list
 expense.close()
 
 expense_str = expense_str[:len(expense_str) - 1]
