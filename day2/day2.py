@@ -31,12 +31,10 @@ each line, split on the space = separate policy, letter, and password -> list of
 def valid_password(passwords):
     # outside function - split password into parts
     separate_parts(passwords)
-    # print(passwords)
     # split password and get min and max numbers
     min_max(passwords)
     # get target letter
     target_letter(passwords)
-    print(passwords)
     # look at password w/ counter for target letter
     valid = 0
     for password in passwords:
@@ -48,8 +46,6 @@ def valid_password(passwords):
                 counter += 1
         if counter >= min and counter <= max:
             valid += 1
-        else:
-            print('invalid', password)
     return valid
 
 def separate_parts(passwords):
