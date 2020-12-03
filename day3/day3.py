@@ -9,12 +9,7 @@ start: top left corner
 pattern going down = 3 to the right and 1 down
 end: bottom right corner
 
-input notes - errm.. maybe keep track of the slopes
-once the whole thing repeats, it's the set/pattern?
-OR PUT IT INTO A SET?!?!?! get a unique pattern! somehow..
-OR just find idxs where the first row is repeated??
-then slice it to see if it's a repeated pattern?
-then we know how to count to the "right"
+input notes - oh my god the input is ONE pattern..
 """
 # Actual input
 map_file = open('input.txt', 'r', encoding='utf-8')
@@ -40,22 +35,6 @@ for slope in example_input:
 
 # print(example)
 def toboggan_trajectory(grid):
-    repeat = 1
-    first = grid[0]
-    repeat_grid = set(grid)
-
-    # for row in range(1, len(grid)):
-    #     slope = grid[row]
-    #     if slope == first:
-    #         repeat += 1
-    #     elif repeat == 1:
-    #         repeat_grid.append(slope)
-
-    # print('repeat count', repeat)
-    # print('first', first)
-    print('repeat grid', repeat_grid)
-    # print('length of grid', len(grid))
-    # print('length of repeat', len(repeat_grid))
     return
 
 print(toboggan_trajectory(example))
