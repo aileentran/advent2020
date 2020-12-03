@@ -35,26 +35,14 @@ def toboggan_trajectory(grid):
     width = len(grid[0])
     row = col = 0
     tree_counter = 0
-    # the end is where row_idx = height - 1
-    print('height', height)
-    print('width', width)
     while row < height - 1:
         if col < width - 3:
             col += 3
             row += 1
-            # print(grid[row])
-            # print('row', row)
-            # print('col', col)
-
             pos = grid[row][col]
             if pos == '#':
-                # print('TREE!')
                 tree_counter += 1
-
-            # print('POSITION', pos)
-            # print('\n')
         else:
-            # print('You have reached the edge!')
             col = col - width
     return tree_counter
 
