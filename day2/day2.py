@@ -100,9 +100,9 @@ def new_valid_password(passwords):
             counter += 1
         if counter == 1:
             valid += 1
-        else:
-            print('invalid password', password)
+        # else:
+        #     print('invalid password', password)
     return valid
 
-print(new_valid_password(example)) #1 valid password: 2 and 3 are invalid
+# print(new_valid_password(example)) #1 valid password: 2 and 3 are invalid
 print(new_valid_password(passwords_input))
