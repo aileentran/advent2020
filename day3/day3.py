@@ -10,30 +10,24 @@ pattern going down = 3 to the right and 1 down
 end: bottom right corner
 
 input notes - oh my god the input is ONE pattern..
+
+how many patterns do we need?
+3 right, 1 down
+orrr loop through the same pattern and keep track of where to start next
+
 """
-# Actual input
-map_file = open('input.txt', 'r', encoding='utf-8')
-map_input = map_file.read().split('\n')
-map_file.close()
+def open_file(file_name):
+    pattern = list()
+    file = open(file_name, "r")
+    for line in file:
+        # remove newline character
+        line = line.rstrip('\n')
+        pattern.append(line)
+    file.close()
+    return pattern
+map = open_file('input.txt')
+example = open_file('example.txt')
 
-map_input = map_input[:len(map_input) - 1]
-map = []
-for slope in map_input:
-    map.append([slope])
-
-# print(map)
-
-# Example input - 7 trees
-example_file = open('example.txt', 'r', encoding='utf-8')
-example_input = example_file.read().split('\n')
-example_file.close()
-
-example_input = example_input[:len(example_input) - 1]
-example = []
-for slope in example_input:
-    example.append([slope])
-
-# print(example)
 def toboggan_trajectory(grid):
     return
 
