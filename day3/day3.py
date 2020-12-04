@@ -2,7 +2,7 @@
 
 """
 Part 1
-input: 2d array/grid - "." open space, "#" tree
+input: grid - "." open space, "#" tree; 2d array or just list of strings
 output: number of trees encountered
 
 start: top left corner
@@ -46,4 +46,46 @@ def toboggan_trajectory(grid):
             col = col - width
     return tree_counter
 
-print(toboggan_trajectory(map))
+# print(toboggan_trajectory(map))
+
+"""
+Part 2
+input: list of strings
+output: int - multiply number of trees for these traversals:
+Right 1, down 1.
+Right 3, down 1. (This is the slope you already checked.)
+Right 5, down 1.
+Right 7, down 1.
+Right 1, down 2.
+"""
+traversals = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
+
+def multiplied_trees(grid, traversals_list):
+    multiply_trees = 0
+    for direction in traversals_list:
+        trees = toboggan_trajectories(grid, direction)
+        print('direction', direction)
+        print('trees', trees)
+        if trees > 0 and multiply_trees == 0:
+            multiply_trees = trees
+        else:
+            multiply_trees *= trees
+    return multiply_trees
+
+def toboggan_trajectories(grid, traversal):
+    height = len(grid)
+    width = len(grid[0])
+    row = col = 0
+    right, down = traversal
+    trees = 0
+    while row < height - 1:
+        if col < width - right:
+            col += right
+            row += down
+            if grid[row][col] == '#':
+                trees += 1
+        else:
+            col = col - width
+    return trees
+
+print(multiplied_trees(map, traversals))
