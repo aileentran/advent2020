@@ -19,7 +19,7 @@ row = grid idx
 col = string idx
 """
 def open_file(file_name):
-    pattern = list()
+    pattern = []
     file = open(file_name, "r")
     for line in file:
         # remove newline character
@@ -64,8 +64,6 @@ def multiplied_trees(grid, traversals_list):
     multiply_trees = 0
     for direction in traversals_list:
         trees = toboggan_trajectories(grid, direction)
-        print('direction', direction)
-        print('trees', trees)
         if trees > 0 and multiply_trees == 0:
             multiply_trees = trees
         else:
