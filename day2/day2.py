@@ -4,14 +4,15 @@ Day 2 - Password Philosophy
 Notes:
 each line gives password policy min_num - max_num letter: password
 """
-# opening actual file with passwords
-passwords_file = open('input.txt', 'r', encoding='utf-8')
-passwords_input = passwords_file.read().split('\n')
-passwords_file.close()
-
-passwords_input = passwords_input[:len(passwords_input) - 1] #getting rid of last ele = empty string
-
-# print(passwords)
+def open_file(file_name):
+    file = open(file_name, 'r')
+    password = []
+    for line in file:
+        line = line.rstrip('\n')
+        password.append(line)
+    file.close()
+    return password
+passwords_input = open_file('input.txt')
 
 example = [
 '1-3 a: abcde',
