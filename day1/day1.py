@@ -1,15 +1,16 @@
 """Day 1: Report Repair"""
-# opening file and converting text to ints!
-expense = open("day1_input.txt", "r", encoding="utf-8")
-expense_str = expense.read().split("\n") #an empty string at end of list
-expense.close()
 
-expense_str = expense_str[:len(expense_str) - 1]
-expense_nums = []
+def open_file(file_name):
+    file = open(file_name, 'r')
+    expense = []
+    for line in file:
+        line = line.rstrip('\n')
+        line = int(line) 
+        expense.append(line)
+    file.close()
+    return expense
+expense_nums = open_file('day1_input.txt')
 
-for string in expense_str:
-    num = int(string)
-    expense_nums.append(num)
 """
 Part 1
 input: list of numbers
