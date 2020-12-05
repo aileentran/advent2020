@@ -71,46 +71,43 @@ def strict_processing(passports):
     return valid
 
 def check_valid(passport):
-    valid = False
     if int(passport['byr']) not in range(1920, 2003):
-        # valid = False
-        return valid
+        return False
     if int(passport['iyr']) not in range(2010, 2021):
-        # valid = False
-        return valid
+        return False
     if int(passport['eyr']) not in range(2020, 2031):
-        # valid = False
-        return valid
+        return False
+
+    # print(passport['hgt'])
+    measurement = passport['hgt'][-2:]
+    # print('measurement', measurement)
+    if measurement != 'cm' and measurement != 'in':
+        print('invalid measurement!', measurement)
+        return False
 
     number = int(passport['hgt'][:-2])
-    measurement = passport['hgt'][-2:]
-    if measurement == 'cm' and number not in range(150, 194):
-        # valid = False
-        return valid
-    if measurement == 'in' and number not in range(59, 76):
-        # valid = False
-        return valid
 
-    # if passport['hcl'][0] != '#' or len(passport['hcl']) != 7:
-    #     return valid
-    #
-    # hcl_chars = passport['hcl'][1:]
-    # print(hcl_chars)
-    #
-    # for char in hcl_chars:
-    #     if char not in map(chr, range(ord('a'), ord('g'))):
-    #         return valid
-    #     elif char.isnumeric() and int(char) not in range(0, 10):
-    #         return valid
+    if measurement == 'cm' and number not in range(150, 194):
+        return False
+    if measurement == 'in' and number not in range(59, 76):
+        return False
+
+    if passport['hcl'][0] != '#' or len(passport['hcl']) != 7:
+        return False
+
+    for char in passport['hcl'][1:]:
+        if char.isnumeric() and int(char) not in range(10):
+            return False
+        elif char.isnumeric() == False and char not in map(chr, range(ord('a'), ord('g'))):
+            return False
 
     valid_eyecolors = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
     if passport['ecl'] not in valid_eyecolors:
-        return valid
+        return False
 
     if passport['pid'].isnumeric() == False or len(passport['pid']) != 9:
-        return valid
-
-    valid = True
-    return valid
+        return False
+    return True
 
 print(strict_processing(example))
+print(strict_processing(input))
