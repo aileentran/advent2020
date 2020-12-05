@@ -91,15 +91,24 @@ def check_valid(passport):
         # valid = False
         return valid
 
-    if passport['hcl'][0] != '#' or len(passport['hcl']) != 7:
+    # if passport['hcl'][0] != '#' or len(passport['hcl']) != 7:
+    #     return valid
+    #
+    # hcl_chars = passport['hcl'][1:]
+    # print(hcl_chars)
+    #
+    # for char in hcl_chars:
+    #     if char not in map(chr, range(ord('a'), ord('g'))):
+    #         return valid
+    #     elif char.isnumeric() and int(char) not in range(0, 10):
+    #         return valid
+
+    valid_eyecolors = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
+    if passport['ecl'] not in valid_eyecolors:
         return valid
 
-    hcl_chars = passport['hcl'][1:]
-    print(hcl_chars)
-    for char in hcl_chars:
-        print(char)
-        if char not in range(10) or char not in map(chr, range(ord('a'), ord('g'))):
-            return valid
+    if passport['pid'].isnumeric() == False or len(passport['pid']) != 9:
+        return valid
 
     valid = True
     return valid
