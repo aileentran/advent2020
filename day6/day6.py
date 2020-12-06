@@ -40,4 +40,38 @@ def group_answers(group):
     return answers
 
 # print(custom_customs(example))
-print(custom_customs(input))
+# print(custom_customs(input))
+
+"""
+Part 2
+identify when EVERYONE in the GROUP answers yes!
+
+thoughts:
+get length of the group
+make a dictionary counter of answers
+loop through dictionary and sum answers that hit the num of peeps in group
+"""
+
+def all_yes(groups):
+    sum = 0
+    for group in groups:
+        same = same_answers(group)
+        sum += same
+    return sum
+
+def same_answers(group):
+    group_num = len(group)
+    all_answers = {}
+    same = 0
+    for answers in group:
+        for answer in answers:
+            if answer not in all_answers.keys():
+                all_answers[answer] = 0
+            all_answers[answer] += 1
+    for response in all_answers:
+        if all_answers[response] == group_num:
+            same += 1
+    return same
+
+# print(all_yes(example))
+print(all_yes(input))
