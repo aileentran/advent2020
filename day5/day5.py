@@ -61,4 +61,37 @@ def binary_search(directions):
     return target
 
 # print(binary_boarding(example))
-print(binary_boarding(input))
+# print(binary_boarding(input))
+
+"""
+Part 2
+completely full flight
+seats at the very front and very back don't exist
+find my seat
+output: my seat id
+"""
+def find_seat(binary):
+    seats = {}
+    for b in binary:
+        row_dir = b[:7]
+        col_dir = b[7:]
+        row = binary_search(row_dir)
+        col = binary_search(col_dir)
+        if row not in seats.keys():
+            seats[row] = []
+        seats[row].append(col)
+    my_row = None
+    cols = None
+    for row in seats:
+        if len(seats[row]) == 7: #bc my seat is in the middle of a full plane
+            my_row = row
+            cols = seats[row]
+    cols.sort()
+    my_col = None
+    for idx, col in enumerate(cols):
+        if idx != col:
+            my_col = col - 1
+            break
+    my_seat_id = my_row * 8 + my_col
+    return my_seat_id
+print(find_seat(input))
