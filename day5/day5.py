@@ -37,11 +37,8 @@ def binary_boarding(binary):
         row = binary_search(row_dir)
         col = binary_search(col_dir)
         seat_id = row * 8 + col
-        print('row', row)
-        print('col', col)
-        print('seat_id', seat_id)
-    if seat_id > highest_id:
-        highest_id = seat_id
+        if seat_id > highest_id:
+            highest_id = seat_id
     return highest_id
 
 def binary_search(directions):
@@ -53,9 +50,9 @@ def binary_search(directions):
     for dir in directions:
         diff = abs(upper - lower)
         if dir == 'F' or dir == 'L':
-            upper -= diff // 2
+            upper -= round(diff / 2)
         else:
-            lower += diff // 2
+            lower += round(diff / 2)
     last = directions[-1]
     if last == 'F' or last == 'L':
         target = lower
@@ -63,5 +60,5 @@ def binary_search(directions):
         target = upper
     return target
 
-print(binary_boarding(example))
-# print(binary_boarding(input))
+# print(binary_boarding(example))
+print(binary_boarding(input))
