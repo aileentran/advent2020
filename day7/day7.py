@@ -17,11 +17,12 @@ example2 = open_file('example2.txt')
 input = open_file('input.txt')
 
 def rules_to_dictionary(rules):
-    all_rules = []
+    all_rules = {}
     for rule in rules:
         rule = rule.split('contain')
         bag_rule = bag_and_contents(rule)
-        all_rules.append(bag_rule)
+        # print('bag_rule', bag_rule)
+        all_rules.update(bag_rule)
     return all_rules
 
 def bag_and_contents(rule):
@@ -44,7 +45,9 @@ def bag_and_contents(rule):
             has_contents[bag_info] = int(amount)
     bag[outer] = has_contents
     return bag
-
+print(rules_to_dictionary(example2))
+print(rules_to_dictionary(example1))
+"""Part 1"""
 def handy_haversacks(rules):
     dict_rules = rules_to_dictionary(rules)
     holds_shiny = directly_holds_shiny(dict_rules)
@@ -87,9 +90,21 @@ def indirectly_holds(rules, holds_shiny):
                   all_bags.add(bag)
     return all_bags
 
-print(handy_haversacks(example1))
-print(handy_haversacks(input))
+# print(handy_haversacks(example1)) #6
+# print(handy_haversacks(input)) #332
 
 """
 Part 2 - how many bags does the shiny bag hold??
+add bags that shiny holds
+example1 = 32 bags
+example2 = 126 bags
 """
+
+def shiny_hold(rules):
+    bags = rules_to_dictionary(rules)
+    # print(bags)
+    # wait wait.. maybe change input to one gigantic ditionary of rules?
+
+print(shiny_hold(example1))
+# print(shiny_hold(example2))
+# print(shiny_hold(input))
