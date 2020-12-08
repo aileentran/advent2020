@@ -40,7 +40,66 @@ def accumulator_value(instructions):
         elif op == 'jmp':
             i += arg
             # if i in index_dict.keys():
+            #     print(f'repeat at {i}', len(instructions), instruction)
             #     return accumulator
 
-print(accumulator_value(example))
-print(accumulator_value(input))
+# print(accumulator_value(example))
+# print(accumulator_value(input))
+
+"""
+Part 2
+exactly 1 instruction is corrupted from jmp <> nop
+figure out which one it is
+change it to the other one to reach all the way to the end
+output: accumulator
+"""
+def fixing_corruption(instructions):
+    # jmp_nop_counter = 0
+    i = len(instructions) - 1
+    while i >= 0:
+        instruction = instructions[i]
+        op, arg = instruction
+        # if op == 'nop' or op == 'jmp':
+        #     print('jmp_nop_counter', jmp_nop_counter, instruction, i)
+        #     jmp_nop_counter += 1
+        if op == 'nop':
+            instructions[i] = ('jmp', arg)
+            return instructions
+        if op == 'jmp':
+            instructions[i] = ('nop', arg)
+            return instructions
+        i -= 1
+# print(fixing_corruption(example))
+# print(fixing_corruption(input))
+
+def uncorrupted_accumulator_value(instructions):
+    uncorrupted_instructions = fixing_corruption(instructions)
+    index_dict = {} #idx: counter. when a counter hits 2, return accumulator
+    accumulator = 0
+    # print(uncorrupted_instructions)
+    i = 0
+    while i < len(uncorrupted_instructions):
+        instruction = uncorrupted_instructions[i]
+        op, arg = instruction
+        # print(instruction)
+        # if 2 in index_dict.values():
+        #     return accumulator
+        if i not in index_dict.keys():
+            index_dict[i] = 1
+        else: #we've hit two!
+            return 'LOOPING!'
+        if op == 'nop':
+            i += 1
+        elif op == 'acc':
+            accumulator += arg
+            i += 1
+        elif op == 'jmp':
+            # print('prev')
+            i += arg
+            if i in index_dict.keys():
+                print(f'repeat at {i}', instruction, uncorrupted_instructions[i])
+                # return accumulator
+    return accumulator
+
+# print(uncorrupted_accumulator_value(example))
+print(uncorrupted_accumulator_value(input))
