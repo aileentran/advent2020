@@ -19,9 +19,28 @@ example = open_file('example.txt')
 input = open_file('input.txt')
 
 def accumulator_value(instructions):
-    index_dict = {}
-    for instruction in instructions:
-        print(instructions)
+    index_dict = {} #idx: counter. when a counter hits 2, return accumulator
+    accumulator = 0
+
+    i = 0
+    while i < len(instructions):
+        instruction = instructions[i]
+        op, arg = instruction
+        # if 2 in index_dict.values():
+        #     return accumulator
+        if i not in index_dict.keys():
+            index_dict[i] = 1
+        else: #we've hit two!
+            return accumulator
+        if op == 'nop':
+            i += 1
+        elif op == 'acc':
+            accumulator += arg
+            i += 1
+        elif op == 'jmp':
+            i += arg
+            # if i in index_dict.keys():
+            #     return accumulator
 
 print(accumulator_value(example))
-# print(accumulator_value(input))
+print(accumulator_value(input))
