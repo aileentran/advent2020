@@ -87,21 +87,34 @@ def indirectly_holds(rules, holds_shiny):
               all_bags.add(rule)
     return all_bags
 
-print(handy_haversacks(example1)) #6
-print(handy_haversacks(input)) #332
+# print(handy_haversacks(example1)) #6
+# print(handy_haversacks(input)) #332
 
 """
 Part 2 - how many bags does the shiny bag hold??
 add bags that shiny holds
 example1 = 32 bags
 example2 = 126 bags
+find what shiny gold bag holds
+add number of those bags in to the total
+find what that bag holds. multiply by number of that color into value
 """
+rules_dict = None
+def count_bag_dependencies(rules, target_bag):
+    global rules_dict
+    if rules_dict == None:
+        rules_dict = rules_to_dictionary(rules)
+    bag_dict = rules_dict[target_bag]
+    total = 0
+    if bag_dict == 'no other bags':
+        return total
+    for bag in bag_dict:
+        content = bag_dict[bag]
+        total += content
+        other = count_bag_dependencies(rules, bag)
+        total += content * other
+    return total
 
-def shiny_hold(rules):
-    bags = rules_to_dictionary(rules)
-    # print(bags)
-    # wait wait.. maybe change input to one gigantic ditionary of rules?
-
-print(shiny_hold(example1))
-# print(shiny_hold(example2))
-# print(shiny_hold(input))
+# print(count_bag_dependencies(example1, 'shiny gold bag'))
+# print(count_bag_dependencies(example2, 'shiny gold bag'))
+print(count_bag_dependencies(input, 'shiny gold bag'))
