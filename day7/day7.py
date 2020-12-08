@@ -45,8 +45,7 @@ def bag_and_contents(rule):
             has_contents[bag_info] = int(amount)
     bag[outer] = has_contents
     return bag
-print(rules_to_dictionary(example2))
-print(rules_to_dictionary(example1))
+
 """Part 1"""
 def handy_haversacks(rules):
     dict_rules = rules_to_dictionary(rules)
@@ -66,32 +65,30 @@ def handy_haversacks(rules):
 def directly_holds_shiny(rules):
     holds_shiny = set()
     for rule in rules:
-        for bag in rule:
-            contents = rule[bag]
-            if contents == 'no other bags':
-                continue
-            contents = contents.keys()
-            if 'shiny gold bag' in contents:
-                holds_shiny.add(bag)
+        contents = rules[rule]
+        if contents == 'no other bags':
+            continue
+        contents = contents.keys()
+        if 'shiny gold bag' in contents:
+            holds_shiny.add(rule)
     return holds_shiny
 
 def indirectly_holds(rules, holds_shiny):
     all_bags = set()
     all_bags.update(holds_shiny)
     for rule in rules:
-      for bag in rule:
-          contents = rule[bag]
-          if contents == 'no other bags':
-              continue
-          else:
-              contents = contents.keys()
-          for content in contents:
-              if content in all_bags:
-                  all_bags.add(bag)
+      contents = rules[rule]
+      if contents == 'no other bags':
+          continue
+      else:
+          contents = contents.keys()
+      for content in contents:
+          if content in all_bags:
+              all_bags.add(rule)
     return all_bags
 
-# print(handy_haversacks(example1)) #6
-# print(handy_haversacks(input)) #332
+print(handy_haversacks(example1)) #6
+print(handy_haversacks(input)) #332
 
 """
 Part 2 - how many bags does the shiny bag hold??
