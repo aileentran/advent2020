@@ -14,7 +14,6 @@ def open_file(file_name):
     return rules
 example = open_file('example.txt')
 input = open_file('input.txt')
-# print(example)
 
 def rules_to_dictionary(rules):
     all_rules = []
@@ -44,38 +43,25 @@ def bag_and_contents(rule):
             has_contents[bag_info] = int(amount)
     bag[outer] = has_contents
     return bag
-# print(rules_to_dictionary(example))
 
 def handy_haversacks(rules):
     dict_rules = rules_to_dictionary(rules)
-    holds_target = set()
-    seen = 0
-    colors = 0
-    holds_shiny = directly_holds_shiny(rules)
-    print('directly has shiny', holds_shiny)
-    # print(len(holds_target))
-    # count bags that hold bags that hold shiny gold bag
-    # 4 of loops below to reach answer..
-    for rule in dict_rules:
-      # print('rule', rule)
-      for bag in rule:
-          # print(rule[bag])
-          contents = rule[bag]
-          if contents == 'no other bags':
-              continue
-          else:
-              contents = contents.keys()
-          for content in contents:
-              if content in holds_target:
-                  holds_target.add(bag)
-    # print(holds_target)
-    # print(len(holds_target))
-    return len(holds_target)
+    holds_shiny = directly_holds_shiny(dict_rules)
+    bags = indirectly_holds(dict_rules, holds_shiny)
+    old_bag_count = len(holds_shiny)
+    curr_bag_count = len(bags)
+    # have a counter to keep track of previous loop of bags
+    # if once counter == loops amount, break out of it and return num of bags
+    while old_bag_count < curr_bag_count:
+        all_bags = indirectly_holds(dict_rules, bags)
+        bags = all_bags
+        old_bag_count = curr_bag_count
+        curr_bag_count = len(all_bags)
+    return curr_bag_count
 
 def directly_holds_shiny(rules):
-    dict_rules = rules_to_dictionary(rules)
     holds_shiny = set()
-    for rule in dict_rules:
+    for rule in rules:
         for bag in rule:
             contents = rule[bag]
             if contents == 'no other bags':
@@ -85,8 +71,20 @@ def directly_holds_shiny(rules):
                 holds_shiny.add(bag)
     return holds_shiny
 
+def indirectly_holds(rules, holds_shiny):
+    all_bags = set()
+    all_bags.update(holds_shiny)
+    for rule in rules:
+      for bag in rule:
+          contents = rule[bag]
+          if contents == 'no other bags':
+              continue
+          else:
+              contents = contents.keys()
+          for content in contents:
+              if content in all_bags:
+                  all_bags.add(bag)
+    return all_bags
 
-# somehow check for bags that hold bags that hold shiny gold bag? degrees removed!
-# seems to be able to catch degrees removed from shiny gold bag
 print(handy_haversacks(example))
-# print(handy_haversacks(input))
+print(handy_haversacks(input))
