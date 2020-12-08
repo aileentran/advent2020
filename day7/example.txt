@@ -7,3 +7,5 @@ dark olive bags contain 3 faded blue bags, 4 dotted black bags.
 vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
 faded blue bags contain no other bags.
 dotted black bags contain no other bags.
+bright green bags contain 3 light red bags
+dark christmas bags contain 1 bright green bags, 2 light red bags
