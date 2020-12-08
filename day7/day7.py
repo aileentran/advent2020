@@ -12,7 +12,8 @@ def open_file(file_name):
         line = line.rstrip('.')
         rules.append(line)
     return rules
-example = open_file('example.txt')
+example1 = open_file('example1.txt')
+example2 = open_file('example2.txt')
 input = open_file('input.txt')
 
 def rules_to_dictionary(rules):
@@ -86,5 +87,9 @@ def indirectly_holds(rules, holds_shiny):
                   all_bags.add(bag)
     return all_bags
 
-print(handy_haversacks(example))
+print(handy_haversacks(example1))
 print(handy_haversacks(input))
+
+"""
+Part 2 - how many bags does the shiny bag hold??
+"""
