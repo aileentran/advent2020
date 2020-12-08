@@ -26,11 +26,10 @@ def accumulator_value(instructions):
     while i < len(instructions):
         instruction = instructions[i]
         op, arg = instruction
-        # if 2 in index_dict.values():
-        #     return accumulator
         if i not in index_dict.keys():
             index_dict[i] = 1
         else: #we've hit two!
+            print(instruction)
             return accumulator
         if op == 'nop':
             i += 1
@@ -39,9 +38,6 @@ def accumulator_value(instructions):
             i += 1
         elif op == 'jmp':
             i += arg
-            # if i in index_dict.keys():
-            #     print(f'repeat at {i}', len(instructions), instruction)
-            #     return accumulator
 
 # print(accumulator_value(example))
 # print(accumulator_value(input))
@@ -53,53 +49,71 @@ figure out which one it is
 change it to the other one to reach all the way to the end
 output: accumulator
 """
-def fixing_corruption(instructions):
-    # jmp_nop_counter = 0
-    i = len(instructions) - 1
-    while i >= 0:
-        instruction = instructions[i]
-        op, arg = instruction
-        # if op == 'nop' or op == 'jmp':
-        #     print('jmp_nop_counter', jmp_nop_counter, instruction, i)
-        #     jmp_nop_counter += 1
-        if op == 'nop':
-            instructions[i] = ('jmp', arg)
-            return instructions
-        if op == 'jmp':
-            instructions[i] = ('nop', arg)
-            return instructions
-        i -= 1
+# attempting to fix entire data set
+# def fixing_corruption(instructions):
+#     # jmp_nop_counter = 0
+#     i = len(instructions) - 1
+#     while i >= 0:
+#         instruction = instructions[i]
+#         op, arg = instruction
+#         if op == 'nop' or op == 'jmp':
+#             print(f'change at {i} idx', instruction)
+#         if op == 'nop':
+#             instructions[i] = ('jmp', arg)
+#             return instructions
+#         if op == 'jmp':
+#             instructions[i] = ('nop', arg)
+#             return instructions
+#         i -= 1
+
+# fixing specific line of instruction
+def fixing_corruption(instruction):
+    op, arg = instruction
+    if op == 'nop':
+        instruction = ('jmp', arg)
+        return instruction
+    if op == 'jmp':
+        instruction = ('nop', arg)
+        return instruction
+
 # print(fixing_corruption(example))
 # print(fixing_corruption(input))
 
 def uncorrupted_accumulator_value(instructions):
-    uncorrupted_instructions = fixing_corruption(instructions)
     index_dict = {} #idx: counter. when a counter hits 2, return accumulator
     accumulator = 0
-    # print(uncorrupted_instructions)
+    op = arg = None
+
     i = 0
-    while i < len(uncorrupted_instructions):
-        instruction = uncorrupted_instructions[i]
+    while i < len(instructions):
+        instruction = instructions[i]
         op, arg = instruction
-        # print(instruction)
-        # if 2 in index_dict.values():
-        #     return accumulator
         if i not in index_dict.keys():
             index_dict[i] = 1
         else: #we've hit two!
-            return 'LOOPING!'
+            print(i, instruction)
+            return 'LOOPING'
         if op == 'nop':
-            i += 1
+            next = i
+            next += 1
         elif op == 'acc':
             accumulator += arg
             i += 1
         elif op == 'jmp':
-            # print('prev')
-            i += arg
-            if i in index_dict.keys():
-                print(f'repeat at {i}', instruction, uncorrupted_instructions[i])
-                # return accumulator
+            next = i
+            next += arg
+
+        # if next in index_dict.keys():
+        #     new_instructions = fixing_corruption(instruction)
+        #     print('old', instruction)
+        #     print('new', new_instructions)
+        #     instructions[next] = new_instructions
+        #     print(instructions)
+        # else:
+        #     i = next
     return accumulator
 
-# print(uncorrupted_accumulator_value(example))
-print(uncorrupted_accumulator_value(input))
+
+print(uncorrupted_accumulator_value(example))
+# print(uncorrupted_accumulator_value(input))
+# print(accumulator_value(input))
