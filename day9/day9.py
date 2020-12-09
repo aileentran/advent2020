@@ -28,8 +28,14 @@ def encoding_error(nums, preamble):
     while i < len(nums) - preamble:
         preamble_nums = nums[i:i + preamble]
         sum_num = nums[i + preamble]
-        print(sum_num)
+        for p_idx, num in enumerate(preamble_nums):
+            diff = sum_num - num
+            if p_idx == len(preamble_nums) - 1 and diff not in preamble_nums:
+                print('not a sum num!')
+                return sum_num
+            if diff in preamble_nums:
+                break
         i += 1
 
-print(encoding_error(example, 5))
-# print(encoding_error(input, 25))
+# print(encoding_error(example, 5))
+print(encoding_error(input, 25))
