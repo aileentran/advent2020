@@ -21,7 +21,6 @@ input = open_file('input.txt')
 def accumulator_value(instructions):
     index_dict = {} #idx: counter. when a counter hits 2, return accumulator
     accumulator = 0
-
     i = 0
     while i < len(instructions):
         instruction = instructions[i]
@@ -29,7 +28,7 @@ def accumulator_value(instructions):
         if i not in index_dict.keys():
             index_dict[i] = 1
         else: #we've hit two!
-            print(instruction)
+            print(i, instruction)
             return accumulator
         if op == 'nop':
             i += 1
@@ -38,6 +37,7 @@ def accumulator_value(instructions):
             i += 1
         elif op == 'jmp':
             i += arg
+    return accumulator
 
 # print(accumulator_value(example))
 # print(accumulator_value(input))
@@ -48,72 +48,50 @@ exactly 1 instruction is corrupted from jmp <> nop
 figure out which one it is
 change it to the other one to reach all the way to the end
 output: accumulator
+Note:
+same instruction can appear again at diff idxs
 """
-# attempting to fix entire data set
-# def fixing_corruption(instructions):
-#     # jmp_nop_counter = 0
-#     i = len(instructions) - 1
-#     while i >= 0:
-#         instruction = instructions[i]
-#         op, arg = instruction
-#         if op == 'nop' or op == 'jmp':
-#             print(f'change at {i} idx', instruction)
-#         if op == 'nop':
-#             instructions[i] = ('jmp', arg)
-#             return instructions
-#         if op == 'jmp':
-#             instructions[i] = ('nop', arg)
-#             return instructions
-#         i -= 1
-
-# fixing specific line of instruction
-def fixing_corruption(instruction):
-    op, arg = instruction
-    if op == 'nop':
-        instruction = ('jmp', arg)
-        return instruction
-    if op == 'jmp':
-        instruction = ('nop', arg)
-        return instruction
-
-# print(fixing_corruption(example))
-# print(fixing_corruption(input))
 
 def uncorrupted_accumulator_value(instructions):
-    index_dict = {} #idx: counter. when a counter hits 2, return accumulator
-    accumulator = 0
-    op = arg = None
-
     i = 0
     while i < len(instructions):
-        instruction = instructions[i]
-        op, arg = instruction
-        if i not in index_dict.keys():
-            index_dict[i] = 1
-        else: #we've hit two!
-            print(i, instruction)
-            return 'LOOPING'
-        if op == 'nop':
-            next = i
-            next += 1
-        elif op == 'acc':
-            accumulator += arg
+        copy_instructions = instructions.copy()
+        # print('copy instructions', i, copy_instructions[i])
+        if copy_instructions[i][0] == 'nop' and i != copy_instructions[i][1]:
+            copy_instructions[i] = ('jmp', copy_instructions[i][1])
+        elif copy_instructions[i][0] == 'jmp':
+            copy_instructions[i] = ('nop', copy_instructions[i][1])
+        elif copy_instructions[i][0] == 'acc':
             i += 1
-        elif op == 'jmp':
-            next = i
-            next += arg
+            continue
+        # print('copy!', copy_instructions)
+        index_dict = {} #index:counter
+        accumulator = 0
+        k = 0
+        while k < len(copy_instructions):
+            copy_instruction = copy_instructions[k]
+            op, arg = copy_instruction
+            # print('in k loop', op, arg)
+            if k not in index_dict.keys():
+                index_dict[k] = 1
+            else: #we've hit two!
+                # print('loop!')
+                break
+            # print(index_dict)
+            if op == 'nop':
+                k += 1
+            elif op == 'acc':
+                accumulator += arg
+                k += 1
+            elif op == 'jmp':
+                k += arg
+            # print('accumulator', accumulator)
+            # print('end of k', k, op, arg)
+            if k == len(copy_instructions): #bc acc and nop k += 1 so.. 1 more than i
+                return accumulator
+        i += 1
 
-        # if next in index_dict.keys():
-        #     new_instructions = fixing_corruption(instruction)
-        #     print('old', instruction)
-        #     print('new', new_instructions)
-        #     instructions[next] = new_instructions
-        #     print(instructions)
-        # else:
-        #     i = next
-    return accumulator
 
-
-print(uncorrupted_accumulator_value(example))
-# print(uncorrupted_accumulator_value(input))
+# print(uncorrupted_accumulator_value(example))
+print(uncorrupted_accumulator_value(input))
 # print(accumulator_value(input))
