@@ -28,8 +28,8 @@ def accumulator_value(instructions):
         if i not in index_dict.keys():
             index_dict[i] = 1
         else: #we've hit two!
-            print(i, instruction)
-            return accumulator
+            # print(i, instruction)
+            return 'loop'
         if op == 'nop':
             i += 1
         elif op == 'acc':
@@ -56,7 +56,6 @@ def uncorrupted_accumulator_value(instructions):
     i = 0
     while i < len(instructions):
         copy_instructions = instructions.copy()
-        # print('copy instructions', i, copy_instructions[i])
         if copy_instructions[i][0] == 'nop' and i != copy_instructions[i][1]:
             copy_instructions[i] = ('jmp', copy_instructions[i][1])
         elif copy_instructions[i][0] == 'jmp':
@@ -64,34 +63,12 @@ def uncorrupted_accumulator_value(instructions):
         elif copy_instructions[i][0] == 'acc':
             i += 1
             continue
-        # print('copy!', copy_instructions)
-        index_dict = {} #index:counter
-        accumulator = 0
-        k = 0
-        while k < len(copy_instructions):
-            copy_instruction = copy_instructions[k]
-            op, arg = copy_instruction
-            # print('in k loop', op, arg)
-            if k not in index_dict.keys():
-                index_dict[k] = 1
-            else: #we've hit two!
-                # print('loop!')
-                break
-            # print(index_dict)
-            if op == 'nop':
-                k += 1
-            elif op == 'acc':
-                accumulator += arg
-                k += 1
-            elif op == 'jmp':
-                k += arg
-            # print('accumulator', accumulator)
-            # print('end of k', k, op, arg)
-            if k == len(copy_instructions): #bc acc and nop k += 1 so.. 1 more than i
-                return accumulator
+        accumulator = accumulator_value(copy_instructions)
+        if accumulator != 'loop':
+            return accumulator
         i += 1
 
 
-# print(uncorrupted_accumulator_value(example))
-print(uncorrupted_accumulator_value(input))
+print(uncorrupted_accumulator_value(example))
+# print(uncorrupted_accumulator_value(input))
 # print(accumulator_value(input))
