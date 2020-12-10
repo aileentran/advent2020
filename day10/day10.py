@@ -49,9 +49,11 @@ def adapter_arrangments(adapters):
     adapters.sort()
     device = adapters[-1] + 3
     adapters.append(device)
-    print(adapters)
 
+    arrangements = set(adapters)
+    
 
+    return arrangements
 
 print(adapter_arrangments(example1))
 # print(adapter_arrangments(example2))
