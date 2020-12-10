@@ -36,4 +36,23 @@ def adapter_array(adapters):
 
 # print(adapter_array(example1))
 # print(adapter_array(example2))
-print(adapter_array(input))
+# print(adapter_array(input))
+
+"""
+Part 2
+input: list of adapters (including outlet and device)
+output: num of ways it can be arranged
+"""
+def adapter_arrangments(adapters):
+    outlet = 0
+    adapters.append(outlet)
+    adapters.sort()
+    device = adapters[-1] + 3
+    adapters.append(device)
+    print(adapters)
+
+
+
+print(adapter_arrangments(example1))
+# print(adapter_arrangments(example2))
+# print(adapter_arrangments(input))
