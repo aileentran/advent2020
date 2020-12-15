@@ -12,3 +12,19 @@ Otherwise, the seat's state does not change.
 
 Repeat rules until seats no longer change
 """
+def open_file(file_name):
+    file = open(file_name, 'r')
+    layout = []
+    for line in file:
+        line = line.rstrip('\n')
+        layout.append(list(line))
+    return layout
+
+example = open_file('example.txt')
+input = open_file('input.txt')
+
+def finding_final(layout):
+    return
+
+def seating_system(final_layout):
+    return
