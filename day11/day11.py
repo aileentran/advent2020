@@ -24,7 +24,20 @@ example = open_file('example.txt')
 input = open_file('input.txt')
 
 def finding_final(layout):
+    copy = layout.copy()
+    width = len(copy[0])
+    height = len(copy)
+    final = copy
+
+    print(width)
+    print(height)
+    for row in copy:
+        print('r', row)
+        # for col in row:
+            # print('col', col)
     return
+
+print(finding_final(example))
 
 def seating_system(final_layout):
     return
