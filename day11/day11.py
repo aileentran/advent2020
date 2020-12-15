@@ -12,6 +12,8 @@ Otherwise, the seat's state does not change.
 
 Repeat rules until seats no longer change
 """
+import copy
+
 def open_file(file_name):
     file = open(file_name, 'r')
     layout = []
@@ -36,20 +38,35 @@ def valid_adjacent(curr, width, height):
     return adj
 
 def finding_final(layout):
-    copy = layout.copy()
-    width = len(copy[0])
-    height = len(copy)
-    final = copy
+    current = layout.copy()
+    next = layout.copy()
+    width = len(layout[0])
+    height = len(layout)
+    final = current
 
-    for r_idx, row in enumerate(copy):
+    for r_idx, row in enumerate(current):
         for c_idx, col in enumerate(row):
-            curr = (r_idx, c_idx)
-            adj = valid_adjacent(curr, width, height)
-            print('curr', curr, copy[r_idx][c_idx])
-            for a in adj:
+            adj = valid_adjacent((r_idx, c_idx), width, height)
+            occupied = 0
+            print('curr', current[r_idx][c_idx])
+            for a_idx, a in enumerate(adj):
                 r_adj, c_adj = a
-                seat = copy[r_adj][c_adj]
-                print(a, seat)
+                seat = current[r_adj][c_adj]
+                if seat == '#':
+                    occupied += 1
+                if seat == '.': #removing floor
+                    adj.pop(a_idx)
+
+            if current[r_idx][c_idx] == 'L' and occupied == 0:
+                next[r_idx][c_idx] = '#'
+            if current[r_idx][c_idx] == '#' and occupied >= 4:
+                next[r_idx][c_idx] = 'L'
+    #currently directly manipulating layout.
+    #TODO: create copy so not to interfere with L and # assignment
+    #TODO: figure out occupied for < 4 seats i.e. edges and things
+    print('current', current)
+    print('next', next)
+    print(layout)
 
 
     return
