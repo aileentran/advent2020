@@ -48,22 +48,22 @@ def finding_final(layout):
         for c_idx, col in enumerate(row):
             adj = valid_adjacent((r_idx, c_idx), width, height)
             occupied = 0
-            print('curr', current[r_idx][c_idx])
+            # print('curr', current[r_idx][c_idx])
             for a_idx, a in enumerate(adj):
                 r_adj, c_adj = a
                 seat = current[r_adj][c_adj]
                 if seat == '#':
                     occupied += 1
-                if seat == '.': #removing floor
-                    adj.pop(a_idx)
+                # if seat == '.': #removing floor
+                #     adj.pop(a_idx)
 
             if current[r_idx][c_idx] == 'L' and occupied == 0:
                 next[r_idx][c_idx] = '#'
-            if current[r_idx][c_idx] == '#' and occupied >= 4:
+            if current[r_idx][c_idx] == '#' and occupied >= len(adj) / 2:
                 next[r_idx][c_idx] = 'L'
     #currently directly manipulating layout.
     #TODO: create copy so not to interfere with L and # assignment
-    #TODO: figure out occupied for < 4 seats i.e. edges and things
+    #TODO: figure out occupied for < 4 adjacent seats i.e. edges and things
     print('current', current)
     print('next', next)
     print(layout)
