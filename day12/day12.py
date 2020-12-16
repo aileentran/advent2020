@@ -62,3 +62,74 @@ def distance(instructions, starting_dir):
     return abs(east_west) + abs(north_south)
 # print(distance(example, 'E'))
 # print(distance(input, 'E'))
+
+"""
+Part 2
+input: list of instructions (letter, units)
+output: Manhattan distance btwn starting and current location
+
+Action N means to move the waypoint north by the given value.
+Action S means to move the waypoint south by the given value.
+Action E means to move the waypoint east by the given value.
+Action W means to move the waypoint west by the given value.
+Action L means to rotate the waypoint around the ship left (counter-clockwise) the given number of degrees.
+Action R means to rotate the waypoint around the ship right (clockwise) the given number of degrees.
+Action F means to move forward to the waypoint a number of times equal to the given value.
+
+waypoint 10 east, 1 north relative to the ship
+
+only time ship moves w/ F
+
+adjust waypoint until F
+then multiply waypoint by F = current location
+"""
+
+def relative_waypoint(instructions, waypoint):
+    compass = ['N', 'E', 'S', 'W']
+    ew, ns = waypoint
+    east_west = 0
+    north_south = 0
+
+
+    for ins in instructions:
+        dir, val = ins
+        # print(ins)
+        # changing waypoint distance
+        if dir == 'N':
+            ns[1] += val
+        if dir == 'E':
+            ew[1] += val
+        if dir == 'S':
+            ns[1] -= val
+        if dir == 'W':
+            ew[1] -= val
+        # changing waypoint direction
+        # assuming ship still pointing east
+        compass_idx = compass.index('E')
+        turn = val // 90
+        new_waypoint = None
+        if dir == 'L':
+            new_waypoint = compass[compass_idx - turn]
+        elif dir == 'R':
+            new_waypoint = compass[(compass_idx + turn) % 4]
+        if new_waypoint == 'N' or new_waypoint == 'S':
+            ns[0] = new_waypoint
+        elif new_waypoint == 'E' or new_waypoint == 'W':
+            ew[0] = new_waypoint
+        # changing ship distance
+        if dir == 'F' and ew[0] == 'E':
+            east_west += ew[1] * val
+        elif dir == 'F' and ew[0] == 'W':
+            east_west -= ew[1] * val
+
+        if dir == 'F' and ns[0] == 'N':
+            north_south += ns[1] * val
+        elif dir == 'F' and ns[0] == 'S':
+            north_south -= ns[1] * val
+
+        # print('east_west', east_west)
+        # print('north_south', north_south)
+    return abs(east_west) + abs(north_south)
+waypoint = [['E', 10], ['N', 1]]
+print(relative_waypoint(example, waypoint))
+print(relative_waypoint(input, waypoint))
