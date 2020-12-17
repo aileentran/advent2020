@@ -90,7 +90,7 @@ def relative_waypoint(instructions, waypoint):
 
     for ins in instructions:
         dir, val = ins
-        print('ins', ins)
+        # print('ins', ins)
         if dir == 'F': #moving ship towards waypoint
             for coord in waypoint:
                 if coord[0] == 'E':
@@ -101,7 +101,7 @@ def relative_waypoint(instructions, waypoint):
                     north_south += coord[1] * val
                 elif coord[0] == 'S':
                     north_south -= coord[1] * val
-            print(east_west, north_south)
+            # print(east_west, north_south)
         elif dir == 'L' or dir == 'R': #changing waypoint direction
             waypoint = change_direction(waypoint, ins)
             # print(waypoint)
