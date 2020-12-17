@@ -85,7 +85,6 @@ then multiply waypoint by F = current location
 """
 
 def relative_waypoint(instructions, waypoint):
-    # coord1, coord2 = waypoint
     east_west = 0
     north_south = 0
 
