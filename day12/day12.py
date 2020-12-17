@@ -93,7 +93,7 @@ def relative_waypoint(instructions, waypoint):
 
     for ins in instructions:
         dir, val = ins
-        # print(ins)
+        print(ins)
         # changing waypoint distance
         if dir == 'N':
             ns[1] += val
@@ -105,17 +105,19 @@ def relative_waypoint(instructions, waypoint):
             ew[1] -= val
         # changing waypoint direction
         # assuming ship still pointing east
-        compass_idx = compass.index('E')
+        ew_idx = compass.index(ew[0])
+        ns_idx = compass.index(ns[0])
         turn = val // 90
-        new_waypoint = None
         if dir == 'L':
-            new_waypoint = compass[compass_idx - turn]
+            ew[0] = compass[ew_idx - turn]
+            ns[0] = compass[ns_idx - turn]
         elif dir == 'R':
-            new_waypoint = compass[(compass_idx + turn) % 4]
-        if new_waypoint == 'N' or new_waypoint == 'S':
-            ns[0] = new_waypoint
-        elif new_waypoint == 'E' or new_waypoint == 'W':
-            ew[0] = new_waypoint
+            ew[0] = compass[(ew_idx + turn) % 4]
+            ns[0] = compass[(ns_idx + turn) % 4]
+        # if new_waypoint == 'N' or new_waypoint == 'S':
+        #     ns[0] = new_waypoint
+        # elif new_waypoint == 'E' or new_waypoint == 'W':
+        #     ew[0] = new_waypoint
         # changing ship distance
         if dir == 'F' and ew[0] == 'E':
             east_west += ew[1] * val
@@ -127,9 +129,10 @@ def relative_waypoint(instructions, waypoint):
         elif dir == 'F' and ns[0] == 'S':
             north_south -= ns[1] * val
 
-        # print('east_west', east_west)
-        # print('north_south', north_south)
+        print('waypoint', ew, ns)
+        print('east_west', east_west)
+        print('north_south', north_south)
     return abs(east_west) + abs(north_south)
 waypoint = [['E', 10], ['N', 1]]
 print(relative_waypoint(example, waypoint))
-print(relative_waypoint(input, waypoint))
+# print(relative_waypoint(input, waypoint))
