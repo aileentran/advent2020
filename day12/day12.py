@@ -91,7 +91,7 @@ def relative_waypoint(instructions, waypoint):
 
     for ins in instructions:
         dir, val = ins
-        # print('ins', ins)
+        print('ins', ins)
         if dir == 'F': #moving ship towards waypoint
             for coord in waypoint:
                 if coord[0] == 'E':
@@ -136,5 +136,5 @@ def change_distance(waypoint, ins):
 
 
 waypoint = [['E', 10], ['N', 1]]
-print(relative_waypoint(example, waypoint))
-# print(relative_waypoint(input, waypoint))
+# print(relative_waypoint(example, waypoint))
+print(relative_waypoint(input, waypoint))
