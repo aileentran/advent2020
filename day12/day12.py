@@ -104,16 +104,26 @@ def relative_waypoint(instructions, waypoint):
                 elif coord[0] == 'S':
                     north_south -= coord[1] * val
                 # print(east_west, north_south)
-        if dir == 'L' or dir == 'R': #changing waypoint direction
-            waypoint = change_direction(waypoint)
+        elif dir == 'L' or dir == 'R': #changing waypoint direction
+            waypoint = change_direction(waypoint, ins)
             print(waypoint)
     return abs(east_west) + abs(north_south)
 
-def change_direction(waypoint):
-    compass = ['N', 'E', 'S', 'W']
+def change_direction(waypoint, ins):
     coord1, coord2 = waypoint
+    dir, val = ins
+    compass = ['N', 'E', 'S', 'W']
     coord1_idx = compass.index(coord1[0])
     coord2_idx = compass.index(coord2[0])
+    turn = val // 90
+    if dir == 'L':
+        coord1[0] = compass[coord1_idx - turn]
+        coord2[0] = compass[coord2_idx - turn]
+    if dir == 'R':
+        coord1[0] = compass[(coord1_idx + turn) % 4]
+        coord2[0] = compass[(coord2_idx + turn) % 4]
+    waypoint = [coord1, coord2]
+    return waypoint
 
 
 waypoint = [['E', 10], ['N', 1]]
