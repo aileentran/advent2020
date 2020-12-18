@@ -133,7 +133,8 @@ def change_distance(waypoint, ins):
             coord[1] += val
     return waypoint
 
-
+# Notes: example input is correct at every step
+# actual input is incorrect
 waypoint = [['E', 10], ['N', 1]]
 # print(relative_waypoint(example, waypoint))
 print(relative_waypoint(input, waypoint))
