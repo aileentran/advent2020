@@ -23,9 +23,22 @@ def open_file(file_name):
                 if id.isdigit() == True:
                     id = int(id)
                     # consider ONLY including valid bus ids?
-                bus_ids.append(id)
+                    bus_ids.append(id)
     info.append(bus_ids)
     return info
 example = open_file('example.txt')
 input = open_file('input.txt')
-print(example)
+
+def earliest_bus(info):
+    arrival, bus_ids = info
+    bus_times = bus_ids.copy()
+    earliest = None
+    while True:
+        for i, id in enumerate(bus_times):
+            bus_times[i] += bus_ids[i]
+            if bus_times[i] >= arrival:
+                earliest = bus_times[i]
+                time_diff = earliest - arrival
+                return time_diff * bus_ids[i]
+print(earliest_bus(example))
+print(earliest_bus(input))
