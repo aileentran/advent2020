@@ -32,13 +32,10 @@ input = open_file('input.txt')
 def earliest_bus(info):
     arrival, bus_ids = info
     bus_times = bus_ids.copy()
-    earliest = None
     while True:
         for i, id in enumerate(bus_times):
             bus_times[i] += bus_ids[i]
             if bus_times[i] >= arrival:
-                earliest = bus_times[i]
-                time_diff = earliest - arrival
-                return time_diff * bus_ids[i]
+                return (bus_times[i] - arrival) * bus_ids[i]
 print(earliest_bus(example))
 print(earliest_bus(input))
